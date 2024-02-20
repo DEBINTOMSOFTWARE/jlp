@@ -1,24 +1,20 @@
 package com.example.jlp.data.repository
-
 import com.example.jlp.data.api.ApiService
-import com.example.jlp.data.model.ColorSwatche
 import com.example.jlp.data.model.DishwasherResponse
-import com.example.jlp.data.model.DynamicAttributes
-import com.example.jlp.data.model.Messaging
-import com.example.jlp.data.model.Price
 import com.example.jlp.data.model.Product
-import com.example.jlp.data.model.PromoMessages
-import com.example.jlp.data.model.QuickAddToBasket
 import com.example.jlp.utils.Resource
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
-import junit.framework.TestCase.assertEquals
-import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
+import java.io.IOException
+import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 class DishwasherRepositoryTest {
 
@@ -33,21 +29,43 @@ class DishwasherRepositoryTest {
     }
 
     @Test
-    fun fetchDishwashers_returnSuccess() = runBlocking {
+    fun getDishwashers_emits_Loading_and_then_Success() = runBlocking {
         val mockApi = mockk<ApiService>()
-        val expectedResponse = DishwasherResponse(listOf(Product(
+        val mockResponse = DishwasherResponse(products = listOf(Product(
             brand = "Bosch",
-            image = "",
+            image = "imageURLA",
             productId = "123456",
             title = "Bosch Dishwasher",
-            type = "Front Loaded"
-            )))
-        coEvery { mockApi.getDishwashers() } returns expectedResponse
+            type = "typeA"
+        )))
+        coEvery { mockApi.getDishwashers() } returns mockResponse
         val repository = DishwasherRepositoryImpl(mockApi)
 
-        val result = repository.getDishwashers().first()
-        assert(result is Resource.Success)
-        assertEquals(expectedResponse.products?.size, (result as  Resource.Success).data.products?.size)
+        val result = repository.getDishwashers().toList()
+        assertTrue { result[0] is Resource.Loading}
+        assertTrue { result[1] is Resource.Success }
+
+        val dishwashers = (result[1] as Resource.Success).data ?: emptyList()
+        assertEquals(1, dishwashers.size)
+        assertEquals("123456", dishwashers[0].productId)
+        assertEquals("Bosch Dishwasher", dishwashers[0].title)
+        assertEquals("Bosch", dishwashers[0].brand)
+        assertEquals("imageURLA", dishwashers[0].image)
+        assertEquals("typeA", dishwashers[0].type)
+    }
+
+    @Test
+    fun `getDishwashers emits Loading and then Error on IOException`() = runTest {
+        // Mock API to throw IOException
+        coEvery { apiService.getDishwashers() } throws IOException()
+
+        val results = repository.getDishwashers().toList()
+
+        // Check Loading is emitted first
+        assertTrue { results[0] is Resource.Loading }
+        // Check Error is emitted second
+        assertTrue { results[1] is Resource.Error }
+        assertEquals((results[1] as Resource.Error).message, "Couldn't reach Server. Check your internet connection.")
     }
 
 }
