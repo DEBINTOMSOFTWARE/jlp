@@ -1,25 +1,33 @@
 package com.example.jlp.data.repository
+import androidx.compose.runtime.MutableState
 import com.example.jlp.data.api.ApiService
 import com.example.jlp.data.model.DishwasherResponse
+import com.example.jlp.data.model.Price
 import com.example.jlp.data.model.Product
+import com.example.jlp.domain.Dishwasher
 import com.example.jlp.utils.Resource
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
+import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runBlockingTest
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
 import java.io.IOException
 import kotlin.test.assertEquals
+import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
 class DishwasherRepositoryTest {
 
     @MockK
     private lateinit var apiService: ApiService
+    @MockK
+    private lateinit var dishwashers: MutableState<List<Dishwasher>>
     private lateinit var repository: DishwasherRepository
 
     @Before
@@ -32,11 +40,15 @@ class DishwasherRepositoryTest {
     fun getDishwashers_emits_Loading_and_then_Success() = runBlocking {
         val mockApi = mockk<ApiService>()
         val mockResponse = DishwasherResponse(products = listOf(Product(
+            alternativeImageUrls = null,
             brand = "Bosch",
+            code = null,
+            dynamicAttributes = null,
             image = "imageURLA",
             productId = "123456",
             title = "Bosch Dishwasher",
-            type = "typeA"
+            type = "typeA",
+            price = Price(currency = "GBP", now = "999", then1 = null, then2 = null, uom = null, was = null)
         )))
         coEvery { mockApi.getDishwashers() } returns mockResponse
         val repository = DishwasherRepositoryImpl(mockApi)
@@ -55,7 +67,7 @@ class DishwasherRepositoryTest {
     }
 
     @Test
-    fun `getDishwashers emits Loading and then Error on IOException`() = runTest {
+    fun getDishwashers_emits_Loading_and_then_Error_on_IOException() = runTest {
         // Mock API to throw IOException
         coEvery { apiService.getDishwashers() } throws IOException()
 

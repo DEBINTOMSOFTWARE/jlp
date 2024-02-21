@@ -1,6 +1,7 @@
 package com.example.jlp.presentation.viewmodel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.example.jlp.data.model.Price
 import com.example.jlp.domain.Dishwasher
 import com.example.jlp.domain.usecases.GetDishwashersUseCase
 import com.example.jlp.utils.Resource
@@ -54,11 +55,15 @@ class DishwasherViewModelTest {
     fun getDishwashers_success_updates_dishwashers_StateFlow() = runTest {
         val mockDishwashers = listOf(
             Dishwasher(
+                alternativeImageUrls = null,
                 brand = "Bosch",
+                code = null,
+                dynamicAttributes = null,
                 image = "imageURLA",
                 productId = "123456",
                 title = "Bosch Dishwasher",
-                type = "typeA"
+                type = "typeA",
+                price = Price(currency = "GBP", now = "999", then1 = null, then2 = null, uom = null, was = null)
             )
         )
         coEvery { getDishwashersUseCase.getDishwashers() } returns flowOf(Resource.Success(mockDishwashers))

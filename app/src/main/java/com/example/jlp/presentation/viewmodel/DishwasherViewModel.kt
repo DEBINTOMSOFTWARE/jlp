@@ -1,5 +1,7 @@
 package com.example.jlp.presentation.viewmodel
 
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.jlp.domain.Dishwasher
@@ -18,6 +20,7 @@ class DishwasherViewModel @Inject constructor(
 
     private val _dishwashers = MutableStateFlow<Resource<List<Dishwasher>>>(Resource.Loading)
     val dishwashers = _dishwashers.asStateFlow()
+    val dishwasherDetails = getDishwashersUseCase.getSingleDishwasherDetails()
 
     init {
         getDishwashers()
@@ -29,5 +32,9 @@ class DishwasherViewModel @Inject constructor(
                  _dishwashers.value = resource
              }
          }
+    }
+
+    fun retrieveSingleProduct(productId: String?) {
+      getDishwashersUseCase.getSingleDishwasher(productId)
     }
 }

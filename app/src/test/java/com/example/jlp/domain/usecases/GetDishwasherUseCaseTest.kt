@@ -1,5 +1,6 @@
 package com.example.jlp.domain.usecases
 
+import com.example.jlp.data.model.Price
 import com.example.jlp.data.repository.DishwasherRepository
 import com.example.jlp.domain.Dishwasher
 import com.example.jlp.utils.Resource
@@ -29,11 +30,15 @@ class GetDishwasherUseCaseTest {
         val mockDishwashersFlow: Flow<Resource<List<Dishwasher>>> = flow {
             emit(Resource.Success(listOf(
                 Dishwasher(
+                    alternativeImageUrls = null,
                     brand = "Bosch",
+                    code = null,
+                    dynamicAttributes = null,
                     image = "imageURLA",
                     productId = "123456",
                     title = "Bosch Dishwasher",
-                    type = "typeA"
+                    type = "typeA",
+                    price = Price(currency = "GBP", now = "999", then1 = null, then2 = null, uom = null, was = null)
             ))))
         }
         coEvery {
