@@ -27,7 +27,7 @@ import com.example.jlp.presentation.components.ProductInformation
 import com.example.jlp.presentation.components.ProductSpecification
 
 @Composable
-fun PhoneDishwasherDetailsScreen(dishwasher: Dishwasher?, navController: NavHostController) {
+fun PhoneDishwasherDetailsScreen(dishwasher: Dishwasher?, navController: NavHostController, isTablet: Boolean) {
     val scaffoldState = rememberScaffoldState();
     val scrollState = rememberScrollState()
     Scaffold(
@@ -59,7 +59,7 @@ fun PhoneDishwasherDetailsScreen(dishwasher: Dishwasher?, navController: NavHost
                 modifier = Modifier
                     .height(8.dp)
             )
-            ProductInformation(dishwasher = dishwasher)
+            ProductInformation(dishwasher = dishwasher, isTablet)
             ProductSpecification(dishwasher = dishwasher)
         }
     }

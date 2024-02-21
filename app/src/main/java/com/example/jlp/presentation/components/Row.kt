@@ -11,7 +11,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
@@ -19,7 +18,7 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun CustomRow(startText: String,
-              endText: String? = null,
+              endContent: @Composable (() -> Unit)? = null,
               fontSize: TextUnit = 12.sp) {
     Column {
         Row(
@@ -37,16 +36,7 @@ fun CustomRow(startText: String,
                 )
             )
 
-            endText?.let {
-                Spacer(modifier = Modifier.weight(1f))
-                Text(
-                    text = it,
-                    textAlign = TextAlign.End,
-                    style = TextStyle(
-                        fontSize = 12.sp
-                    )
-                )
-            }
+            endContent?.invoke() ?: Spacer(modifier = Modifier.weight(1f))
         }
 
         Divider(modifier = Modifier.padding(horizontal = 16.dp))

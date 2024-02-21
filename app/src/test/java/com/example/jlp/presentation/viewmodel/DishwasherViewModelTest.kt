@@ -58,6 +58,7 @@ class DishwasherViewModelTest {
                 alternativeImageUrls = null,
                 brand = "Bosch",
                 code = null,
+                displaySpecialOffer = null,
                 dynamicAttributes = null,
                 image = "imageURLA",
                 productId = "123456",

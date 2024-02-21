@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.sp
 import com.example.jlp.domain.Dishwasher
 
 @Composable
-fun ProductInformation(dishwasher: Dishwasher?) {
+fun ProductInformation(dishwasher: Dishwasher?, isTablet: Boolean) {
     val price = dishwasher?.price
     val specialOffer = dishwasher?.displaySpecialOffer ?: ""
     val guarantee = dishwasher?.dynamicAttributes?.guarantee ?: ""
@@ -31,63 +31,77 @@ fun ProductInformation(dishwasher: Dishwasher?) {
             .background(Color.White)
             .padding(start = 16.dp, bottom = 16.dp)
     ) {
-
-        Text(
-            text = "£${price?.now}", style = TextStyle(
-                fontWeight = FontWeight.Bold,
-                fontSize = 24.sp
-            )
-        )
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        if (specialOffer.isNotEmpty())
-            Column {
-                Text(
-                    text = specialOffer, style = TextStyle(
-                        fontSize = 16.sp,
-                        color = Color.Red
-                    )
+        if (isTablet) {
+            Text(
+                text = "Product Information", style = TextStyle(
+                    fontSize = 24.sp,
+                    color = Color.Gray
                 )
-                Spacer(modifier = Modifier.height(16.dp))
-            }
-
-        if (guarantee.isNotEmpty())
-            Column {
-                Text(
-                    text = guarantee, style = TextStyle(
-                        fontSize = 16.sp,
-                    )
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(
+                text = "Project code: $code", style = TextStyle(
+                    fontSize = 20.sp
                 )
-                Spacer(modifier = Modifier.height(30.dp))
-            }
-
-        Text(
-            text = "Product Information", style = TextStyle(
-                fontSize = 24.sp,
-                color = Color.Gray
             )
-        )
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        Text(
-            text = title, style = TextStyle(
-                fontSize = 16.sp,
-                color = Color.Gray
+            Spacer(modifier = Modifier.height(4.dp))
+            Text(
+                text = title, style = TextStyle(
+                    fontSize = 16.sp,
+                    color = Color.Gray
+                )
             )
-        )
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        Text(
-            text = "Project code: $code", style = TextStyle(
-                fontSize = 20.sp
+            Spacer(modifier = Modifier.height(20.dp))
+            Divider()
+        } else {
+            Text(
+                text = "£${price?.now}", style = TextStyle(
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 24.sp
+                )
             )
-        )
+            Spacer(modifier = Modifier.height(16.dp))
+            if (specialOffer.isNotEmpty())
+                Column {
+                    Text(
+                        text = specialOffer, style = TextStyle(
+                            fontSize = 16.sp,
+                            color = Color.Red
+                        )
+                    )
+                    Spacer(modifier = Modifier.height(16.dp))
+                }
+            if (guarantee.isNotEmpty())
+                Column {
+                    Text(
+                        text = guarantee, style = TextStyle(
+                            fontSize = 16.sp,
+                        )
+                    )
+                    Spacer(modifier = Modifier.height(30.dp))
+                }
+            Text(
+                text = "Product Information", style = TextStyle(
+                    fontSize = 24.sp,
+                    color = Color.Gray
+                )
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+            Text(
+                text = title, style = TextStyle(
+                    fontSize = 16.sp,
+                    color = Color.Gray
+                )
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+            Text(
+                text = "Project code: $code", style = TextStyle(
+                    fontSize = 20.sp
+                )
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+            Divider()
+        }
 
-        Spacer(modifier = Modifier.height(16.dp))
-
-        Divider()
     }
 }

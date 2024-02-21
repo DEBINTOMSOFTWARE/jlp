@@ -5,15 +5,18 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
@@ -24,6 +27,7 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
@@ -44,9 +48,12 @@ import androidx.navigation.NavHostController
 import com.example.jlp.Destination
 import com.example.jlp.domain.Dishwasher
 import com.example.jlp.presentation.components.CustomRow
+import com.example.jlp.presentation.components.ImageSlider
+import com.example.jlp.presentation.components.ProductInformation
 import com.example.jlp.presentation.components.ProductSpecification
 import com.example.jlp.presentation.viewmodel.DishwasherViewModel
 import com.example.jlp.utils.ProductImage
+import com.example.jlp.utils.VerticalDivider
 import com.example.jlp.utils.getFullImageUrl
 
 @Composable
@@ -78,14 +85,134 @@ fun DishwasherDetails(
     isTablet: Boolean,
     navController: NavHostController
 ) {
-    if(isTablet) {
-             Text(text = "This is tablet screen")
+    if (isTablet) {
+        //  Text(text = "This is tablet screen")
+        TabletDishwasherDetailsScreen(
+            dishwasher = dishwasher,
+            navController = navController,
+            isTablet = isTablet
+        )
     } else {
-        PhoneDishwasherDetailsScreen(dishwasher = dishwasher, navController = navController)
+        PhoneDishwasherDetailsScreen(
+            dishwasher = dishwasher,
+            navController = navController,
+            isTablet = false
+        )
     }
 
 }
 
+@Composable
+fun TabletDishwasherDetailsScreen(
+    dishwasher: Dishwasher?,
+    navController: NavHostController,
+    isTablet: Boolean
+) {
+    val title = dishwasher?.title ?: ""
+    val price = dishwasher?.price
+    val specialOffer = dishwasher?.displaySpecialOffer ?: ""
+    val guarantee = dishwasher?.dynamicAttributes?.guarantee ?: ""
+
+    val scaffoldState = rememberScaffoldState();
+    Scaffold(
+        scaffoldState = scaffoldState,
+        topBar = {
+            TopAppBar(title = { Text(text = title) },
+                backgroundColor = Color.Gray,
+                navigationIcon = {
+                    IconButton(onClick = { navController.navigateUp() }) {
+                        Icon(Icons.Filled.ArrowBack, contentDescription = null)
+                    }
+                })
+        }
+    ) { paddingValues ->
+
+        BoxWithConstraints(
+            modifier = Modifier
+                .fillMaxHeight()
+                .padding(paddingValues.calculateTopPadding())
+        ) {
+            val screenWidth = maxWidth
+            val leftColumnWidth = screenWidth * 0.7f
+            val rightColumnWidth = screenWidth * 0.3f
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+            ) {
+                Column(
+                    modifier = Modifier
+                        .width(leftColumnWidth)
+                        .verticalScroll(rememberScrollState())
+                        .padding(end = 8.dp)
+                ) {
+                    ImageSlider(images = dishwasher?.alternativeImageUrls)
+                    ProductInformation(dishwasher = dishwasher, isTablet = isTablet)
+                    ReadMore()
+                    ProductSpecification(dishwasher = dishwasher)
+
+                }
+
+                Divider(
+                    color = Color.Gray,
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .width(1.dp)
+
+                )
+
+                Column(
+                    modifier = Modifier
+                        .width(rightColumnWidth)
+                        .padding(start = 8.dp)
+                ) {
+                    Text(
+                        text = "£${price?.now}", style = TextStyle(
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 24.sp
+                        )
+                    )
+                    Spacer(modifier = Modifier.height(16.dp))
+                    if (specialOffer.isNotEmpty())
+                        Column {
+                            Text(
+                                text = specialOffer, style = TextStyle(
+                                    fontSize = 16.sp,
+                                    color = Color.Red
+                                )
+                            )
+                            Spacer(modifier = Modifier.height(16.dp))
+                        }
+                    if (guarantee.isNotEmpty())
+                        Column {
+                            Text(
+                                text = guarantee, style = TextStyle(
+                                    fontSize = 16.sp,
+                                )
+                            )
+                            Spacer(modifier = Modifier.height(30.dp))
+                        }
+                }
+            }
+        }
+    }
+
+
+}
+
+@Composable
+fun ReadMore() {
+    CustomRow(
+        startText = "Read More",
+        endContent = {
+            Icon(
+            imageVector = Icons.Default.KeyboardArrowRight,
+            contentDescription = null,
+            modifier = Modifier.size(24.dp)
+        )},
+        fontSize = 20.sp
+    )
+}
 
 
 
