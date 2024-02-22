@@ -1,10 +1,8 @@
 package com.example.jlp.data.repository
-import androidx.compose.runtime.MutableState
 import com.example.jlp.data.api.ApiService
 import com.example.jlp.data.model.DishwasherResponse
 import com.example.jlp.data.model.Price
 import com.example.jlp.data.model.Product
-import com.example.jlp.domain.Dishwasher
 import com.example.jlp.utils.Resource
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
