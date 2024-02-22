@@ -73,7 +73,6 @@ fun AppNavigation(
             } else {
                 dishwasherViewModel.retrieveSingleProduct(productId)
                 DetailsScreen(
-                    productId = productId,
                     dishwasherViewModel = dishwasherViewModel,
                     navController = navController
                 )

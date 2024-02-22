@@ -9,7 +9,6 @@ import com.example.jlp.presentation.viewmodel.DishwasherViewModel
 
 @Composable
 fun DetailsScreen(
-    productId: String?,
     dishwasherViewModel: DishwasherViewModel,
     navController: NavHostController
 ) {

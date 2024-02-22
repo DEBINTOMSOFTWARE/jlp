@@ -97,7 +97,7 @@ fun ShowDishwashersGrid(
     result: Resource.Success<List<Dishwasher>>,
     navController: NavHostController
 ) {
-    result?.data?.let { dishwashers ->
+    result.data?.let { dishwashers ->
         LazyVerticalGrid(
             columns = GridCells.Adaptive(minSize = 128.dp),
             contentPadding = PaddingValues(8.dp),

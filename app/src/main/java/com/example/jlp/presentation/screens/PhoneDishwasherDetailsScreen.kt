@@ -32,7 +32,7 @@ fun PhoneDishwasherDetailsScreen(
     navController: NavHostController,
     isTablet: Boolean
 ) {
-    val scaffoldState = rememberScaffoldState();
+    val scaffoldState = rememberScaffoldState()
     val scrollState = rememberScrollState()
     Scaffold(
         scaffoldState = scaffoldState,

@@ -49,7 +49,7 @@ fun TabletDishwasherDetailsScreen(
     val specialOffer = dishwasher?.displaySpecialOffer ?: ""
     val guarantee = dishwasher?.dynamicAttributes?.guarantee ?: ""
 
-    val scaffoldState = rememberScaffoldState();
+    val scaffoldState = rememberScaffoldState()
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = {

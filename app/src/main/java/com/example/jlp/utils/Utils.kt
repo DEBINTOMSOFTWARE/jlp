@@ -40,20 +40,6 @@ fun ProductImage(
 
 }
 
-@Composable
-fun VerticalDivider(
-    modifier: Modifier = Modifier,
-    color: Color = MaterialTheme.colors.onSurface.copy(alpha = 0.5f),
-    thickness: Dp = 1.dp
-) {
-    Box(
-        modifier
-            .fillMaxHeight() // Make sure it fills the height available
-            .width(thickness) // Set the thickness of the divider
-            .background(color = color)
-    )
-}
-
 open class SingletonHolder<out T: Any, in A>(creator: (A) -> T) {
     private var creator: ((A) -> T)? = creator
     @Volatile private var instance: T? = null
