@@ -19,3 +19,40 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+# Keep all classes in the Jetpack Compose package
+-keep class androidx.compose.** { *; }
+
+# Keep classes that use Compose's @Composable annotation
+-keep @androidx.compose.runtime.Composable class * {
+    <methods>;
+}
+
+# Keep ViewModel classes to prevent issues with saved state
+-keep class * extends androidx.lifecycle.ViewModel {
+    <init>(...);
+}
+
+# Keep all classes used
+-keep class com.example.jlp.data.model.** { *;}
+-keep class com.example.jlp.data.api.** { *;}
+-keep class com.example.jlp.data.repository.** { *;}
+
+-keep class com.example.jlp.di.** { *;}
+
+-keep class com.example.jlp.domain.** { *;}
+-keep class com.example.jlp.domain.usecases.** { *;}
+
+-keep class com.example.jlp.presentation.components.** { *;}
+-keep class com.example.jlp.presentation.screens.** { *;}
+-keep class com.example.jlp.presentation.viewmodel.** { *;}
+-keep class com.example.jlp.MainActivity {
+    public <fields>;
+    public <methods>;
+}
+
+-keep class com.example.jlp.data.model.**{
+private <fields>;
+}
+
+#
