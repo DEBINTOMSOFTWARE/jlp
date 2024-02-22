@@ -15,29 +15,40 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.Text
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.jlp.domain.Dishwasher
+import com.example.jlp.presentation.components.BodyLargeText
 import com.example.jlp.presentation.components.ImageSlider
 import com.example.jlp.presentation.components.ProductInformation
 import com.example.jlp.presentation.components.ProductSpecification
 
 @Composable
-fun PhoneDishwasherDetailsScreen(dishwasher: Dishwasher?, navController: NavHostController, isTablet: Boolean) {
+fun PhoneDishwasherDetailsScreen(
+    dishwasher: Dishwasher?,
+    navController: NavHostController,
+    isTablet: Boolean
+) {
     val scaffoldState = rememberScaffoldState();
     val scrollState = rememberScrollState()
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = {
-            TopAppBar(title = { Text(text = dishwasher?.brand ?: "") },
-                backgroundColor = Color.Gray,
+            TopAppBar(modifier = Modifier.height(80.dp),
+                title = {
+                BodyLargeText(text = dishwasher?.title ?: "")
+            },
+                backgroundColor = MaterialTheme.colorScheme.primary,
                 navigationIcon = {
                     IconButton(onClick = { navController.navigateUp() }) {
-                        Icon(Icons.Filled.ArrowBack, contentDescription = null)
+                        Icon(
+                            Icons.Filled.ArrowBack,
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.surface
+                        )
                     }
                 })
         }
@@ -50,8 +61,7 @@ fun PhoneDishwasherDetailsScreen(dishwasher: Dishwasher?, navController: NavHost
                     vertical = paddingValues.calculateTopPadding(),
                     horizontal = paddingValues.calculateBottomPadding()
                 )
-                .background(Color.Gray)
-                .padding(all = 16.dp)
+                .background(MaterialTheme.colorScheme.secondary)
 
         ) {
             ImageSlider(images = dishwasher?.alternativeImageUrls)

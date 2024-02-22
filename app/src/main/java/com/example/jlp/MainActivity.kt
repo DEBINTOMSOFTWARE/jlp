@@ -11,7 +11,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -40,7 +39,7 @@ class MainActivity : ComponentActivity() {
             JlpTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
+                    color = MaterialTheme.colorScheme.primary
                 ) {
                     val navController = rememberNavController()
                     AppNavigation(
@@ -82,13 +81,4 @@ fun AppNavigation(
         }
     }
 
-}
-
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    JlpTheme {
-
-    }
 }

@@ -7,8 +7,9 @@ import com.example.jlp.utils.Resource
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class GetDishwashersUseCaseImpl @Inject constructor(private val dishwasherRepository: DishwasherRepository) :
-    GetDishwashersUseCase {
+class GetDishwashersUseCaseImpl @Inject constructor(
+    private val dishwasherRepository: DishwasherRepository
+) : GetDishwashersUseCase {
     override fun getDishwashers(): Flow<Resource<List<Dishwasher>>> {
         return dishwasherRepository.getDishwashers()
     }

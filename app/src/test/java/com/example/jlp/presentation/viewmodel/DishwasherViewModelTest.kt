@@ -1,9 +1,11 @@
 package com.example.jlp.presentation.viewmodel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.compose.runtime.mutableStateOf
 import com.example.jlp.data.model.Price
 import com.example.jlp.domain.Dishwasher
 import com.example.jlp.domain.usecases.GetDishwashersUseCase
+import com.example.jlp.framework.connectivity.ConnectivityMonitor
 import com.example.jlp.utils.Resource
 import io.mockk.coEvery
 import io.mockk.mockk
@@ -31,20 +33,23 @@ class DishwasherViewModelTest {
     private val testDispatcher = UnconfinedTestDispatcher()
 
     private lateinit var getDishwashersUseCase: GetDishwashersUseCase
+    private lateinit var  connectivityMonitor: ConnectivityMonitor
     private lateinit var viewModel: DishwasherViewModel
 
     @Before
     fun setUp() {
         Dispatchers.setMain(testDispatcher) // Set the main dispatcher to the test dispatcher
         getDishwashersUseCase = mockk()
+        connectivityMonitor = mockk()
 
     }
 
     @Test
     fun initial_state_is_Resource_Loading() = runTest {
         coEvery { getDishwashersUseCase.getDishwashers() } returns flowOf(Resource.Loading)
+        coEvery { getDishwashersUseCase.getSingleDishwasherDetails() } returns mutableStateOf(null)
 
-        viewModel = DishwasherViewModel(getDishwashersUseCase)
+        viewModel = DishwasherViewModel(getDishwashersUseCase, connectivityMonitor)
         viewModel.getDishwashers()
 
         val initialState = viewModel.dishwashers.value
@@ -68,8 +73,20 @@ class DishwasherViewModelTest {
             )
         )
         coEvery { getDishwashersUseCase.getDishwashers() } returns flowOf(Resource.Success(mockDishwashers))
+        coEvery { getDishwashersUseCase.getSingleDishwasherDetails() } returns mutableStateOf(Dishwasher(
+            alternativeImageUrls = null,
+            brand = "Bosch",
+            code = null,
+            displaySpecialOffer = null,
+            dynamicAttributes = null,
+            image = "imageURLA",
+            productId = "123456",
+            title = "Bosch Dishwasher",
+            type = "typeA",
+            price = Price(currency = "GBP", now = "999", then1 = null, then2 = null, uom = null, was = null)
+        ))
 
-        viewModel = DishwasherViewModel(getDishwashersUseCase)
+        viewModel = DishwasherViewModel(getDishwashersUseCase, connectivityMonitor)
         viewModel.getDishwashers()
 
         val state = viewModel.dishwashers.value
@@ -82,8 +99,8 @@ class DishwasherViewModelTest {
     fun getDishwashers_error_updates_dishwashers_StateFlow() = runTest {
         val errorMessage = "Error fetching data"
         coEvery { getDishwashersUseCase.getDishwashers() } returns flowOf(Resource.Error(errorMessage))
-
-        viewModel = DishwasherViewModel(getDishwashersUseCase)
+        coEvery { getDishwashersUseCase.getSingleDishwasherDetails() } returns mutableStateOf(null)
+        viewModel = DishwasherViewModel(getDishwashersUseCase, connectivityMonitor)
         viewModel.getDishwashers()
 
         val state = viewModel.dishwashers.value

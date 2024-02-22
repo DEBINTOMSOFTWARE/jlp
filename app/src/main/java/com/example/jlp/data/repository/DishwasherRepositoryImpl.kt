@@ -1,6 +1,5 @@
 package com.example.jlp.data.repository
 
-import androidx.annotation.VisibleForTesting
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import com.example.jlp.data.api.ApiService
@@ -17,8 +16,8 @@ import javax.inject.Inject
 class DishwasherRepositoryImpl @Inject constructor(private val apiService: ApiService) :
     DishwasherRepository {
 
-        val products =MutableStateFlow<List<Dishwasher>>(emptyList())
-        val productDetails = mutableStateOf<Dishwasher?>(null)
+    val products = MutableStateFlow<List<Dishwasher>>(emptyList())
+    val productDetails = mutableStateOf<Dishwasher?>(null)
 
     override fun getDishwashers(): Flow<Resource<List<Dishwasher>>> = flow {
         emit(Resource.Loading)
@@ -40,11 +39,11 @@ class DishwasherRepositoryImpl @Inject constructor(private val apiService: ApiSe
     }
 
     override fun getSingleDishwasher(productId: String?) {
-         productId?.let {
-             productDetails.value = products.value.firstOrNull {dishwasher ->
-                 dishwasher.productId == productId
-             }
-         }
+        productId?.let {
+            productDetails.value = products.value.firstOrNull { dishwasher ->
+                dishwasher.productId == productId
+            }
+        }
     }
 
     override fun getSingleDishwasherDetails(): MutableState<Dishwasher?> {

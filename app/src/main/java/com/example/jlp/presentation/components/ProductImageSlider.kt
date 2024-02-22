@@ -46,17 +46,11 @@ fun ImageSlider(images: List<String>?) {
                 .fillMaxWidth()
                 .height(240.dp)
         ) { page ->
-            // Our page content
             if (images != null) {
                 ProductImage(
                     url = getFullImageUrl(images[page]),
                     contentScale = ContentScale.Crop,
                     modifier = Modifier.fillMaxWidth()
-//                    .graphicsLayer(
-//                    scaleX = 1.2f,
-//                    scaleY = 1.2f,
-//                    rotationZ = 30f,
-//                )
                 )
             }
         }

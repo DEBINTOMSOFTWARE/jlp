@@ -6,20 +6,17 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Divider
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 
 @Composable
-fun CustomRow(startText: String,
-              endContent: @Composable (() -> Unit)? = null,
-              fontSize: TextUnit = 12.sp) {
+fun CustomRow(
+    startText: String,
+    endContent: @Composable (() -> Unit)? = null,
+    fontSize: Int = 12
+) {
     Column {
         Row(
             modifier = Modifier
@@ -27,13 +24,10 @@ fun CustomRow(startText: String,
                 .padding(16.dp), // Adjust padding as needed
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(
+            BodySmallText(
                 text = startText,
                 modifier = Modifier.weight(1f),
-                textAlign = TextAlign.Start,
-                style = TextStyle(
-                    fontSize = fontSize,
-                )
+                fontSize = fontSize
             )
 
             endContent?.invoke() ?: Spacer(modifier = Modifier.weight(1f))
