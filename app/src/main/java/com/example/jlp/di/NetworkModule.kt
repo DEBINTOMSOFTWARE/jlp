@@ -65,6 +65,7 @@ object NetworkModule {
         loggingInterceptor: HttpLoggingInterceptor
     ): OkHttpClient =
         OkHttpClient.Builder()
+            .cache(cache)
             .certificatePinner(certificatePinner)
             .addNetworkInterceptor(onlineInterceptor)
             .addInterceptor(loggingInterceptor)
