@@ -25,6 +25,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.role
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
@@ -115,6 +119,7 @@ fun DishwasherItem(product: Dishwasher?, navController: NavHostController) {
     val title = product?.title
     val price = product?.price
     val productId = product?.productId
+    val brand = product?.brand
 
     Column(
         horizontalAlignment = Alignment.Start,
@@ -122,11 +127,15 @@ fun DishwasherItem(product: Dishwasher?, navController: NavHostController) {
             .fillMaxWidth()
             .border(width = 1.dp, color = Color.LightGray)
             .background(Color.White)
-            .padding(8.dp)
+            .padding(16.dp)
             .wrapContentHeight()
             .clickable {
                 if (productId != null)
                     navController.navigate(Destination.DetailsScreen.createRoute(productId))
+            }
+            .semantics {
+                role = Role.Button
+                contentDescription = "Product $brand,"
             }
     ) {
         ProductImage(
@@ -136,6 +145,7 @@ fun DishwasherItem(product: Dishwasher?, navController: NavHostController) {
                 .height(120.dp)
                 .fillMaxWidth()
                 .aspectRatio(1f),
+            contentDescription = "$title",
             contentScale = ContentScale.Crop
         )
         BodySmallText(

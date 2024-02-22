@@ -11,6 +11,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.heading
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.jlp.domain.Dishwasher
@@ -32,10 +35,15 @@ fun ProductInformation(dishwasher: Dishwasher?, isTablet: Boolean) {
         if (isTablet) {
             HeaderLargeText(
                 text = "Product Information",
-                fontWeight = FontWeight.Normal
+                fontWeight = FontWeight.Normal,
+                modifier = Modifier.semantics {
+                    heading()
+                }
             )
             Spacer(modifier = Modifier.height(8.dp))
-            BodyExtraLargeText(text = "Project code: $code")
+            BodyExtraLargeText(text = "Project code: $code", Modifier.semantics {
+                contentDescription = "Project code: $code body text"
+            })
             Spacer(modifier = Modifier.height(4.dp))
             BodyLargeText(text = title)
             Spacer(modifier = Modifier.height(20.dp))
@@ -58,7 +66,10 @@ fun ProductInformation(dishwasher: Dishwasher?, isTablet: Boolean) {
                 }
             HeaderLargeText(
                 text = "Product Information",
-                fontWeight = FontWeight.Normal
+                fontWeight = FontWeight.Normal,
+                modifier = Modifier.semantics {
+                    heading()
+                }
             )
             Spacer(modifier = Modifier.height(16.dp))
             BodyLargeText(text = title)

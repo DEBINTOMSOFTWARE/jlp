@@ -9,6 +9,7 @@ import androidx.compose.material3.Divider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -20,7 +21,7 @@ fun CustomRow(
     Column {
         Row(
             modifier = Modifier
-                .fillMaxWidth()
+                .fillMaxWidth().semantics(mergeDescendants = true) {}
                 .padding(16.dp), // Adjust padding as needed
             verticalAlignment = Alignment.CenterVertically
         ) {

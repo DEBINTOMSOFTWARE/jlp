@@ -26,6 +26,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.role
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -56,7 +60,12 @@ fun TabletDishwasherDetailsScreen(
             TopAppBar(title = { BodyExtraLargeText(text = title) },
                 backgroundColor = MaterialTheme.colorScheme.primary,
                 navigationIcon = {
-                    IconButton(onClick = { navController.navigateUp() }) {
+                    IconButton(
+                        onClick = { navController.navigateUp() },
+                        modifier = Modifier.semantics {
+                            role = Role.Button
+                            contentDescription = "Go back"
+                        }) {
                         Icon(
                             Icons.Filled.ArrowBack,
                             contentDescription = null,

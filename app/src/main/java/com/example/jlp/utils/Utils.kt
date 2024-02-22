@@ -23,11 +23,12 @@ fun getFullImageUrl(relativeUrl: String): String {
 fun ProductImage(
     url: String?,
     modifier: Modifier,
+    contentDescription: String? = null,
     contentScale: ContentScale = ContentScale.FillWidth
 ) {
     AsyncImage(
         model = url,
-        contentDescription = null,
+        contentDescription = contentDescription,
         modifier = modifier,
         contentScale = contentScale)
 

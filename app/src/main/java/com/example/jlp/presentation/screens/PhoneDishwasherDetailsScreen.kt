@@ -18,6 +18,10 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.role
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.jlp.domain.Dishwasher
@@ -39,11 +43,16 @@ fun PhoneDishwasherDetailsScreen(
         topBar = {
             TopAppBar(modifier = Modifier.height(80.dp),
                 title = {
-                BodyLargeText(text = dishwasher?.title ?: "")
-            },
+                    BodyLargeText(text = dishwasher?.title ?: "")
+                },
                 backgroundColor = MaterialTheme.colorScheme.primary,
                 navigationIcon = {
-                    IconButton(onClick = { navController.navigateUp() }) {
+                    IconButton(
+                        onClick = { navController.navigateUp() },
+                        modifier = Modifier.semantics {
+                            role = Role.Button
+                            contentDescription = "Go back"
+                        }) {
                         Icon(
                             Icons.Filled.ArrowBack,
                             contentDescription = null,

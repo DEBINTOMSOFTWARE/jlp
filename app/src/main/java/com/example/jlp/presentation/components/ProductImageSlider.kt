@@ -2,6 +2,7 @@ package com.example.jlp.presentation.components
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -17,11 +18,16 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.unit.dp
 import com.example.jlp.utils.ProductImage
 import com.example.jlp.utils.getFullImageUrl
@@ -30,6 +36,11 @@ import com.example.jlp.utils.getFullImageUrl
 @Composable
 fun ImageSlider(images: List<String>?) {
 
+    val selectedPages = remember{ mutableStateListOf<Boolean>().apply {
+        if (images != null)
+           addAll(List( images.size) {false })
+    } }
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -37,7 +48,7 @@ fun ImageSlider(images: List<String>?) {
             .background(Color.White)
     ) {
         val pagerState = rememberPagerState(pageCount = {
-            3
+            images?.size ?: 0
         })
         HorizontalPager(
             state = pagerState,
@@ -46,13 +57,21 @@ fun ImageSlider(images: List<String>?) {
                 .fillMaxWidth()
                 .height(240.dp)
         ) { page ->
-            if (images != null) {
-                ProductImage(
-                    url = getFullImageUrl(images[page]),
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier.fillMaxWidth()
-                )
-            }
+           images?.let {
+               ProductImage(
+                   url = getFullImageUrl(it[page]),
+                   contentScale = ContentScale.Crop,
+                   contentDescription = "Image ${page + 1} of  ${images.size}",
+                   modifier = Modifier.fillMaxWidth()
+                       .clickable {
+                           selectedPages[page] = !selectedPages[page]
+                       }
+                       .semantics {
+                           contentDescription = "Image ${page + 1} of ${it.size}"
+                           stateDescription = if(selectedPages[page]) "Selected" else "Not Selected"
+                       }
+               )
+           }
         }
         Spacer(modifier = Modifier.height(16.dp))
         Box(
