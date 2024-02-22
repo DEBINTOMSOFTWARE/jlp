@@ -23,8 +23,6 @@ class DishwasherRepositoryTest {
 
     @MockK
     private lateinit var apiService: ApiService
-    @MockK
-    private lateinit var dishwashers: MutableState<List<Dishwasher>>
     private lateinit var repository: DishwasherRepository
 
     @Before
