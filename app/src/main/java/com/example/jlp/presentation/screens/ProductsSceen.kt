@@ -77,7 +77,10 @@ fun ProductsScreen(
 
         when (result) {
             is Resource.Loading -> {
-                CircularProgressIndicator()
+                CircularProgressIndicator(
+                    modifier = Modifier.semantics { contentDescription = "Loading Progress" }
+                )
+
             }
 
             is Resource.Success -> {
@@ -92,8 +95,17 @@ fun ProductsScreen(
                     text = "Error: ${(result as Resource.Error).message}",
                 )
             }
+
+            else -> {}
         }
     }
+}
+
+@Composable
+fun ShowProgressIndicator(
+    result: Resource.Loading
+) {
+    CircularProgressIndicator()
 }
 
 @Composable
@@ -103,6 +115,7 @@ fun ShowDishwashersGrid(
 ) {
     result.data?.let { dishwashers ->
         LazyVerticalGrid(
+            modifier = Modifier.semantics { contentDescription = "Product List" },
             columns = GridCells.Adaptive(minSize = 128.dp),
             contentPadding = PaddingValues(8.dp),
         ) {

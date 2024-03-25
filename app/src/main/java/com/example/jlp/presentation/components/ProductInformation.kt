@@ -30,7 +30,9 @@ fun ProductInformation(dishwasher: Dishwasher?, isTablet: Boolean) {
         modifier = Modifier
             .fillMaxWidth()
             .background(Color.White)
-            .padding(start = 16.dp, bottom = 16.dp)
+            .padding(start = 16.dp, bottom = 16.dp).semantics {
+                contentDescription = "Product Information"
+            }
     ) {
         if (isTablet) {
             HeaderLargeText(

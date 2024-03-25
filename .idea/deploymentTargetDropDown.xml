@@ -2,21 +2,20 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
+      <entry key="ProductScreenIntegrationTest">
+        <State />
+      </entry>
       <entry key="app">
-        <State>
-          <runningDeviceTargetSelectedWithDropDown>
-            <Target>
-              <type value="RUNNING_DEVICE_TARGET" />
-              <deviceKey>
-                <Key>
-                  <type value="VIRTUAL_DEVICE_PATH" />
-                  <value value="C:\Users\debin\.android\avd\Pixel_7_Pro_API_34.avd" />
-                </Key>
-              </deviceKey>
-            </Target>
-          </runningDeviceTargetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2024-02-22T20:25:16.965153400Z" />
-        </State>
+        <State />
+      </entry>
+      <entry key="launchDetailsScreenOnProductClicked()">
+        <State />
+      </entry>
+      <entry key="testProductScreenDisplayAndNavigateToDetails()">
+        <State />
+      </entry>
+      <entry key="testProductScreenLoadingAndProductsDisplay()">
+        <State />
       </entry>
     </value>
   </component>

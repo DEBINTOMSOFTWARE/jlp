@@ -32,6 +32,7 @@ import com.example.jlp.presentation.components.ProductSpecification
 
 @Composable
 fun PhoneDishwasherDetailsScreen(
+    modifier: Modifier,
     dishwasher: Dishwasher?,
     navController: NavHostController,
     isTablet: Boolean
@@ -41,7 +42,7 @@ fun PhoneDishwasherDetailsScreen(
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = {
-            TopAppBar(modifier = Modifier.height(80.dp),
+            TopAppBar(modifier = modifier.height(80.dp).semantics { contentDescription = "AppBar" },
                 title = {
                     BodyLargeText(text = dishwasher?.title ?: "")
                 },
@@ -61,7 +62,8 @@ fun PhoneDishwasherDetailsScreen(
                     }
                 })
         }
-    ) { paddingValues ->
+    ) {
+        paddingValues ->
         Column(
             modifier = Modifier
                 .verticalScroll(scrollState)

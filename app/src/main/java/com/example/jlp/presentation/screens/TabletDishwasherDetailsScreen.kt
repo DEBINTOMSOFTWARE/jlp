@@ -44,6 +44,7 @@ import com.example.jlp.presentation.components.ProductSpecification
 
 @Composable
 fun TabletDishwasherDetailsScreen(
+    modifier: Modifier,
     dishwasher: Dishwasher?,
     navController: NavHostController,
     isTablet: Boolean
@@ -57,7 +58,8 @@ fun TabletDishwasherDetailsScreen(
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = {
-            TopAppBar(title = { BodyExtraLargeText(text = title) },
+            TopAppBar(modifier = modifier.semantics { contentDescription = "AppBar" },
+                title = { BodyExtraLargeText(text = title) },
                 backgroundColor = MaterialTheme.colorScheme.primary,
                 navigationIcon = {
                     IconButton(

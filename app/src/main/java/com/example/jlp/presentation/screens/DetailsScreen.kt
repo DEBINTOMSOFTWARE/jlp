@@ -1,7 +1,10 @@
 package com.example.jlp.presentation.screens
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.navigation.NavHostController
 import com.example.jlp.Destination
 import com.example.jlp.domain.Dishwasher
@@ -25,23 +28,27 @@ fun DetailsScreen(
         screenWidthDp >= 600
     }
 
-    DishwasherDetails(dishwasher = dishwasher, isTablet = isTablet, navController)
+    DishwasherDetails(modifier = Modifier.semantics { contentDescription = "Details Screen" },
+        dishwasher = dishwasher, isTablet = isTablet, navController)
 }
 
 @Composable
 fun DishwasherDetails(
+    modifier: Modifier,
     dishwasher: Dishwasher?,
     isTablet: Boolean,
     navController: NavHostController
 ) {
     if (isTablet) {
         TabletDishwasherDetailsScreen(
+            modifier = modifier,
             dishwasher = dishwasher,
             navController = navController,
             isTablet = true
         )
     } else {
         PhoneDishwasherDetailsScreen(
+            modifier = modifier,
             dishwasher = dishwasher,
             navController = navController,
             isTablet = false

@@ -18,7 +18,7 @@ class DishwasherViewModel @Inject constructor(
     connectivityMonitor: ConnectivityMonitor
 ) : ViewModel() {
 
-    private val _dishwashers = MutableStateFlow<Resource<List<Dishwasher>>>(Resource.Loading)
+    private val _dishwashers = MutableStateFlow<Resource<List<Dishwasher>>>(Resource.Initial())
     val dishwashers = _dishwashers.asStateFlow()
     val dishwasherDetails = getDishwashersUseCase.getSingleDishwasherDetails()
     val networkAvailable = connectivityMonitor
@@ -28,6 +28,7 @@ class DishwasherViewModel @Inject constructor(
     }
 
     fun getDishwashers() {
+        _dishwashers.value = Resource.Loading
         viewModelScope.launch {
             getDishwashersUseCase.getDishwashers().collect { resource ->
                 _dishwashers.value = resource

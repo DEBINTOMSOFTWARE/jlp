@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import com.example.jlp.domain.Dishwasher
 
 @Composable
@@ -13,7 +15,9 @@ fun ProductSpecification(dishwasher: Dishwasher?) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .background(Color.White)
+            .background(Color.White).semantics {
+                contentDescription = "Product Specification"
+            }
     ) {
         CustomRow(
             startText = "Product Specification",
