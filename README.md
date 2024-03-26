@@ -13,6 +13,7 @@ Features
     Adaptive UI for both mobile and tablet devices with distinct designs.
     MVVM architecture with clean code practices.
     Unit tests following TDD principles.
+    Integration Tests
     Certificate pinning for enhanced network security.
     ProGuard rules for code obfuscation.
     Caching mechanism for API calls.
@@ -25,11 +26,11 @@ Assumptions
  The app requires an active internet connection for the initial data fetch.
 
 Usage
-The app provides a user-friendly interface that allows customers to browse and learn more about dishwashers available for purchase at John Lewis. 
+The app provides a user-friendly interface allowing customers to browse and learn more about dishwashers available at John Lewis. 
 
 Viewing Dishwasher Products
 Upon launching the app, you will be presented with a grid of dishwashers. Each item in the grid represents a dishwasher available for purchase, displaying its image and basic information.
-Scroll through the grid to view the different dishwasher models.
+You can just scroll through the grid to view the different dishwasher models.
 
 Accessing Product Details
 
@@ -53,14 +54,14 @@ Known Issues
 In the development and testing phase of the app, a couple of issues were identified, particularly related to the accessibility features when tested on an emulator. 
 
 1) Accessibility Double Click Issue: 
-It has been observed that sometimes the double-click action required for product selection does not register properly when accessibility features, such as TalkBack, are enabled. This issue was encountered during testing on an emulator, and it's unclear if the behavior persists on actual devices due to the lack of physical device testing.
+It has been observed that sometimes the double-click action required for product selection does not register properly when accessibility features, such as TalkBack, are enabled. This issue was encountered during testing on an emulator.
 
 2) Horizontal Pager Swipe Issue: 
-Another issue identified involves the horizontal pager on the product details page, which does not seem to respond to swipe gestures after enabling accessibility features. This behavior was also noted during emulator testing, and it remains to be verified on physical devices.
+Another issue identified involves the horizontal pager on the product details page, which does not seem to respond to swipe gestures after enabling accessibility features. This behaviour was also noted during emulator testing.
 
-It's important to note that these issues may be specific to the emulator environment, and further testing on actual devices is necessary to determine if they persist in a real-world usage scenario. Any updates or fixes regarding these issues will be addressed in future app releases.
+The known accessibility issues identified during testing on an emulator, specifically related to the double-click action and horizontal pager swipe, have not been found on a device like the OnePlus 8T. Further testing on additional devices is required to confirm if these issues are emulator-specific and do not persist in real-world usage scenarios. Updates or fixes for these issues will be addressed in future app releases to ensure optimal accessibility across various devices.
 
 Future Improvements
 
 1) Offline mode with persistent data storage.
-2) Authentication and Autherization
+2) Authentication and Authorization
