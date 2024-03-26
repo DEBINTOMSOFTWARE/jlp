@@ -74,4 +74,3 @@ fun ImageSlider(images: List<String>?) {
         HorizontalPagerIndicators(pagerState = pagerState)
     }
 }
-

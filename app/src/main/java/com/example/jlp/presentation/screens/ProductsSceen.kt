@@ -80,7 +80,6 @@ fun ProductsScreen(
                 CircularProgressIndicator(
                     modifier = Modifier.semantics { contentDescription = "Loading Progress" }
                 )
-
             }
 
             is Resource.Success -> {
@@ -99,13 +98,6 @@ fun ProductsScreen(
             else -> {}
         }
     }
-}
-
-@Composable
-fun ShowProgressIndicator(
-    result: Resource.Loading
-) {
-    CircularProgressIndicator()
 }
 
 @Composable
